@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2016
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppstoreAPI", "Appstore\AppstoreAPI.csproj", "{DB0F0A0B-B198-4B43-A0BB-D62E7C655775}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppstoreWeb", "AppstoreWeb\AppstoreWeb.csproj", "{6298CC46-4BCD-4D2A-8F53-8FF9A4321CD0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DB0F0A0B-B198-4B43-A0BB-D62E7C655775}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB0F0A0B-B198-4B43-A0BB-D62E7C655775}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB0F0A0B-B198-4B43-A0BB-D62E7C655775}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB0F0A0B-B198-4B43-A0BB-D62E7C655775}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6298CC46-4BCD-4D2A-8F53-8FF9A4321CD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6298CC46-4BCD-4D2A-8F53-8FF9A4321CD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6298CC46-4BCD-4D2A-8F53-8FF9A4321CD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6298CC46-4BCD-4D2A-8F53-8FF9A4321CD0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3CD560D6-9CCD-4ACC-870D-6ABF1DFBD681}
+	EndGlobalSection
+EndGlobal
