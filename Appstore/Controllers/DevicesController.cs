@@ -10,29 +10,29 @@ using AppstoreAPI.Models;
 namespace AppstoreAPI.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController] 
-    public class AppsController : ControllerBase
+    [ApiController]
+    public class DevicesController : ControllerBase
     {
         private readonly DbContextOptions<testmsdaContext> _dbOptions;
 
-        public AppsController(DbContextOptions<testmsdaContext> dbOptions)
+        public DevicesController(DbContextOptions<testmsdaContext> dbOptions)
         {
             _dbOptions = dbOptions;
         }
 
-        // GET: api/Apps
+        // GET: api/Devices
         [HttpGet]
-        public IEnumerable<App> GetApp()
+        public IEnumerable<Device> GetDevice()
         {
             using (var context = new testmsdaContext(_dbOptions))
             {
-                return context.App.ToList();
-            }
+                return context.Device.ToList();
+            }                
         }
 
-        // GET: api/Apps/5
+        // GET: api/Devices/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetApp([FromRoute] int id)
+        public async Task<IActionResult> GetDevice([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
@@ -41,35 +41,34 @@ namespace AppstoreAPI.Controllers
 
             using (var context = new testmsdaContext(_dbOptions))
             {
-                var app = await context.App.FindAsync(id);
+                var device = await context.Device.FindAsync(id);
 
-                if (app == null)
+                if (device == null)
                 {
                     return NotFound();
                 }
 
-                return Ok(app);
+                return Ok(device);
             }
         }
 
-        // PUT: api/Apps/5
+        // PUT: api/Devices/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutApp([FromRoute] int id, [FromBody] App app)
+        public async Task<IActionResult> PutDevice([FromRoute] int id, [FromBody] Device device)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != app.AppId)
+            if (id != device.DeviceId)
             {
                 return BadRequest();
             }
 
             using (var context = new testmsdaContext(_dbOptions))
             {
-
-                context.Entry(app).State = EntityState.Modified;
+                context.Entry(device).State = EntityState.Modified;
 
                 try
                 {
@@ -77,7 +76,7 @@ namespace AppstoreAPI.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AppExists(id, context))
+                    if (!DeviceExists(id))
                     {
                         return NotFound();
                     }
@@ -86,14 +85,14 @@ namespace AppstoreAPI.Controllers
                         throw;
                     }
                 }
-
-                return NoContent();
-            }
             }
 
-        // POST: api/Apps
+            return NoContent();
+        }
+
+        // POST: api/Devices
         [HttpPost]
-        public async Task<IActionResult> PostApp([FromBody] App app)
+        public async Task<IActionResult> PostDevice([FromBody] Device device)
         {
             if (!ModelState.IsValid)
             {
@@ -102,17 +101,16 @@ namespace AppstoreAPI.Controllers
 
             using (var context = new testmsdaContext(_dbOptions))
             {
-
-                context.App.Add(app);
+                context.Device.Add(device);
                 await context.SaveChangesAsync();
 
-                return CreatedAtAction("GetApp", new { id = app.AppId }, app);
+                return CreatedAtAction("GetDevice", new { id = device.DeviceId }, device);
             }
         }
 
-        // DELETE: api/Apps/5
+        // DELETE: api/Devices/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteApp([FromRoute] int id)
+        public async Task<IActionResult> DeleteDevice([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
@@ -121,22 +119,25 @@ namespace AppstoreAPI.Controllers
 
             using (var context = new testmsdaContext(_dbOptions))
             {
-                var app = await context.App.FindAsync(id);
-                if (app == null)
+                var device = await context.Device.FindAsync(id);
+                if (device == null)
                 {
                     return NotFound();
                 }
 
-                context.App.Remove(app);
+                context.Device.Remove(device);
                 await context.SaveChangesAsync();
 
-                return Ok(app);
+                return Ok(device);
             }
         }
 
-        private bool AppExists(int id, testmsdaContext context)
+        private bool DeviceExists(int id)
         {
-            return context.App.Any(e => e.AppId == id);
+            using (var context = new testmsdaContext(_dbOptions))
+            {
+                return context.Device.Any(e => e.DeviceId == id);
+            }
         }
     }
 }

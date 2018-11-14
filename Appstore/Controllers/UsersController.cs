@@ -10,29 +10,29 @@ using AppstoreAPI.Models;
 namespace AppstoreAPI.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController] 
-    public class AppsController : ControllerBase
+    [ApiController]
+    public class UsersController : ControllerBase
     {
         private readonly DbContextOptions<testmsdaContext> _dbOptions;
 
-        public AppsController(DbContextOptions<testmsdaContext> dbOptions)
+        public UsersController(DbContextOptions<testmsdaContext> dbOptions)
         {
             _dbOptions = dbOptions;
         }
 
-        // GET: api/Apps
+        // GET: api/Users
         [HttpGet]
-        public IEnumerable<App> GetApp()
+        public IEnumerable<User> GetUser()
         {
             using (var context = new testmsdaContext(_dbOptions))
             {
-                return context.App.ToList();
+                return context.User.ToList();
             }
         }
 
-        // GET: api/Apps/5
+        // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetApp([FromRoute] int id)
+        public async Task<IActionResult> GetUser([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
@@ -41,35 +41,34 @@ namespace AppstoreAPI.Controllers
 
             using (var context = new testmsdaContext(_dbOptions))
             {
-                var app = await context.App.FindAsync(id);
+                var user = await context.User.FindAsync(id);
 
-                if (app == null)
+                if (user == null)
                 {
                     return NotFound();
                 }
 
-                return Ok(app);
+                return Ok(user);
             }
         }
 
-        // PUT: api/Apps/5
+        // PUT: api/Users/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutApp([FromRoute] int id, [FromBody] App app)
+        public async Task<IActionResult> PutUser([FromRoute] int id, [FromBody] User user)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != app.AppId)
+            if (id != user.UserId)
             {
                 return BadRequest();
             }
 
             using (var context = new testmsdaContext(_dbOptions))
             {
-
-                context.Entry(app).State = EntityState.Modified;
+                context.Entry(user).State = EntityState.Modified;
 
                 try
                 {
@@ -77,7 +76,7 @@ namespace AppstoreAPI.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AppExists(id, context))
+                    if (!UserExists(id))
                     {
                         return NotFound();
                     }
@@ -86,14 +85,14 @@ namespace AppstoreAPI.Controllers
                         throw;
                     }
                 }
-
-                return NoContent();
-            }
             }
 
-        // POST: api/Apps
+            return NoContent();
+        }
+
+        // POST: api/Users
         [HttpPost]
-        public async Task<IActionResult> PostApp([FromBody] App app)
+        public async Task<IActionResult> PostUser([FromBody] User user)
         {
             if (!ModelState.IsValid)
             {
@@ -102,17 +101,16 @@ namespace AppstoreAPI.Controllers
 
             using (var context = new testmsdaContext(_dbOptions))
             {
-
-                context.App.Add(app);
+                context.User.Add(user);
                 await context.SaveChangesAsync();
 
-                return CreatedAtAction("GetApp", new { id = app.AppId }, app);
+                return CreatedAtAction("GetUser", new { id = user.UserId }, user);
             }
         }
 
-        // DELETE: api/Apps/5
+        // DELETE: api/Users/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteApp([FromRoute] int id)
+        public async Task<IActionResult> DeleteUser([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
@@ -121,22 +119,25 @@ namespace AppstoreAPI.Controllers
 
             using (var context = new testmsdaContext(_dbOptions))
             {
-                var app = await context.App.FindAsync(id);
-                if (app == null)
+                var user = await context.User.FindAsync(id);
+                if (user == null)
                 {
                     return NotFound();
                 }
 
-                context.App.Remove(app);
+                context.User.Remove(user);
                 await context.SaveChangesAsync();
 
-                return Ok(app);
+                return Ok(user);
             }
         }
 
-        private bool AppExists(int id, testmsdaContext context)
+        private bool UserExists(int id)
         {
-            return context.App.Any(e => e.AppId == id);
+            using (var context = new testmsdaContext(_dbOptions))
+            {
+                return context.User.Any(e => e.UserId == id);
+            }
         }
     }
 }
